@@ -66,7 +66,7 @@ struct BlockArray {
         int startBelong = array[l].belong;  
         int endBelong = array[r].belong;
 
-        // The modified interval is contained in the the same block.
+        // The range to add is contained in the the same block.
         if (startBelong == endBelong) {
             for (int i = l; i <= r; i++) {
                 array[i].val += x;
@@ -80,7 +80,7 @@ struct BlockArray {
             return;
         }
 
-        // The modified interval spans different blocks.
+        // The range to add spans different blocks.
 
         // Traverse the prefix incomplete block.
         for (int i = l; array[i].belong == startBelong; i++) {
