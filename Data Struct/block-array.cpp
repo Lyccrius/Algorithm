@@ -66,27 +66,35 @@ struct BlockArray {
         int startBelong = array[l].belong;  
         int endBelong = array[r].belong;
 
+        // The modified interval is contained in the the same block.
         if (startBelong == endBelong) {
             for (int i = l; i <= r; i++) {
                 array[i].val += x;
                 block[startBelong].sum += x;
+                //block[endBelong].sum += x;
             }
 
             Sort(startBelong);
+            //Sort(endBelong);
 
             return;
         }
 
+        // The modified interval spans different blocks.
+
+        // Traverse the prefix incomplete block.
         for (int i = l; array[i].belong == startBelong; i++) {
             array[i].val += x;
             block[startBelong].sum += x;
         }
         
+        // Traverse the complete block.
         for (int i = startBelong + 1; i < endBelong; i++) {
             block[i].tag += x;
             block[i].sum += x * s;
         }
 
+        // Traverse suffix incomplete blocks.
         for (int i = r; array[i].belong == endBelong; i--) {
             array[i].val += x;
             block[endBelong].sum += x;
@@ -106,6 +114,7 @@ struct BlockArray {
         if (startBelong == endBelong) {
             for (int i = l; i <= r; i++) {
                 if (array[i].val + block[startBelong].tag >= x) {
+                //if (array[i].val + block[endBelong].tag >= x) {
                     ans ++;
                 }
             }
