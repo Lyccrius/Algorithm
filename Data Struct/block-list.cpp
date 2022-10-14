@@ -150,3 +150,30 @@ struct BlockArray {
 };
 
 struct BlockArray blockArray;
+
+int main() {
+    int N;
+    scanf("%d", &N);
+    for (int i = 1; i <= N; i++) {
+        scanf("%d", &blockArray.array[i].val);
+    }
+
+    blockArray.n = N;
+    blockArray.s = sqrt(N);
+    blockArray.Init();
+
+    char opt;
+    int L, R;
+
+    for (int i = 1; i <= Q; i++) {
+        scanf(" %c", &opt);
+        switch(opt) {
+            case '': {
+                scanf("%d %d", &L, &R);
+                break;
+            }
+        }
+    }
+
+    return 0;
+}
