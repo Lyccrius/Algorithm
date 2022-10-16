@@ -1,7 +1,3 @@
-#include <cstdio>
-#include <cmath>
-#include <algorithm>
-
 const int maxn = 1e6 + 10;
 const int maxs = 1e3 + 10;
 
