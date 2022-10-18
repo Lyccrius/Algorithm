@@ -14,6 +14,12 @@ struct HashMap {
         memset(head, 0, sizeof(head));
     }
 
+    void clear() {
+        cnt = 0;
+        memset(head, 0, sizeof(head));
+        return;
+    }
+
     int hash(long long key) {
         return (key % size + size) % size;
     }
