@@ -15,7 +15,7 @@ struct HashMap {
     }
 
     int hash(long long key) {
-        return key % size;
+        return (key % size + size) % size;
     }
 
     int& operator [](long long key) {
