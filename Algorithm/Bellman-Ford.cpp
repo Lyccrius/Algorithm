@@ -1,9 +1,8 @@
 struct Graph {
     struct Vertex {
+        int distance;
         int out[maxn];
         int ocnt;
-
-        int distance;
 
         Vertex() {
             ocnt = 0;
@@ -30,8 +29,8 @@ struct Graph {
     }
 
     bool BellmanFord(int s) {
-        vertex[s].distance = 0;
         bool relaxed;
+        vertex[s].distance = 0;
 
         for (int i = 1; i <= n; i++) {
             relaxed = false;
@@ -41,10 +40,11 @@ struct Graph {
                     continue;
                 }
 
-                for (int xe = 1; xe <= vertex[i].ocnt; j++) {
+                for (int xe = 1; xe <= vertex[u].ocnt; xe++) {
                     int v = edge[xe].head;
-                    if (vertex[v].distance > vertex[u].distance + edge[xe].weight) {
-                        vertex[v].distance = vertex[u].distance + edge[xe].weight;
+                    int w = edge[xe].weight;
+                    if (vertex[v].distance > vertex[u].distance + w) {
+                        vertex[v].distance = vertex[u].distance + w;
                         relaxed = true;
                     }
                 }
