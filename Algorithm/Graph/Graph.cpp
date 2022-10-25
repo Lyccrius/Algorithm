@@ -124,21 +124,20 @@ struct Graph {
 
 struct Graph {
     struct Vertex {
-        int ocnt;
         bool visited;
     };
 
     Vertex vertex[maxn];
-    int adjacency[maxn][maxn];
+    vector<vector<int> > adjacency;
+    //  使用 int adjacency[maxn][maxn] 则空间复杂度为 O(n^2)。
 
     void AddEdge(int u, int v) {
-        vertex[u].ocnt++;
-        adjacency[vertex[u].ocnt] = v;
+        adjacency[u].push_back(v);
         return;
     }
 
     bool FindEdge(int u, int v) {
-        for (int i = 1; i <= vertex[u].ocnt; i++) {
+        for (int i = 0; i < adjacency[u].size(); i++) {
             if (adjacency[u][i] == v) {
                 return true;
             }
@@ -153,7 +152,7 @@ struct Graph {
         }
         vertex[u].visited = true;
 
-        for (int i = 1; i <= vertex[u].ocnt; i++) {
+        for (int i = 0; i <= adjacency[u].size(); i++) {
             DFS(adjacency[u][i]);
         }
 
