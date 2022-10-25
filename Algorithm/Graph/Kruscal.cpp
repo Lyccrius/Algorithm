@@ -37,7 +37,7 @@ struct Graph {
         }
     };
 
-    Edge edge[maxe];
+    Edge edge[maxm];
     int ecnt;
     
     DSU dsu;

@@ -1,19 +1,13 @@
 struct Graph {
     struct Vertex {
+        int head;
         int distance;
-        int out[maxn];
-        int ocnt;
-
-        Vertex() {
-            ocnt = 0;
-            distance = inf;
-        }
     };
 
     struct Edge {
-        int tail;
         int head;
         int weight;
+        int next;
     };
 
     Vertex vertex[maxn];
@@ -22,9 +16,10 @@ struct Graph {
 
     void AddEdge(int tail, int head, int weight) {
         ecnt++;
-        edge[ecnt].tail = tail;
         edge[ecnt].head = head;
         edge[ecnt].weight = weight;
+        edge[ecnt].next = vertex[u].head;
+        vertex[u].head = ecnt;
         return;
     }
 
@@ -40,7 +35,7 @@ struct Graph {
                     continue;
                 }
 
-                for (int xe = 1; xe <= vertex[u].ocnt; xe++) {
+                for (int xe = vertex[u].head; xe; xe = edge[xe].next) {
                     int v = edge[xe].head;
                     int w = edge[xe].weight;
                     if (vertex[v].distance > vertex[u].distance + w) {
