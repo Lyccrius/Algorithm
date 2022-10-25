@@ -10,24 +10,31 @@ struct Graph {
         int distance;
         int distance1;
         int distance2;
+        int head;
+    };
+
+    struct Edge {
+        int head;
+        int next;
     };
 
     Vertex vertex[maxn];
-    std::vector<std::vector<int> > edge;
-
-    Graph() {
-        edge.resize(maxm);
-    }
+    Edge edge[maxm << 1];
+    int ecnt;
 
     void AddEdge(int u, int v) {
-        edge[u].push_back(v);
+        ecnt++;
+        edge[ecnt].head = v;
+        edge[ecnt].next = vertex[u].head;
+        vertex[u].head = ecnt;
         return;
     }
 
     int point;
 
     void DFS(int u, int from) {
-        for (int v : edge[u]) {
+        for (int i = vertex[u].head; i; i = edge[i].next) {
+            int v = edge[i].head;
             if (v == from) {
                 continue;
             }
@@ -46,7 +53,8 @@ struct Graph {
     int diameter;
 
     void DP(int u, int from) {
-        for (int v : edge[u]) {
+        for (int i = vertex[u].head; i; i = edge[i].next) {
+            int v = edge[i].head;
             if (v == from) {
                 continue;
             }
