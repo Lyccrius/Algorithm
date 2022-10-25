@@ -185,10 +185,6 @@ struct Graph {
     struct Edge {
         int head;
         int next;
-
-        Edge() {
-            next = -1;
-        }
     }
 
     Vertex vertex[maxn];
@@ -204,7 +200,7 @@ struct Graph {
     }
 
     bool FindEdge(int u, int v) {
-        for (int i = vertex[u].head; ~i; i = edge[i].next) {    // ~i means i != -1
+        for (int i = vertex[u].head; i; i = edge[i].next) {
             if (edge[u].head == v) {
                 return true;
             }
