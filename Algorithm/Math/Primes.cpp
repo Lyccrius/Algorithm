@@ -7,7 +7,7 @@ int minPrimeFactor[maxn];
 int prime[maxn];
 int cnt;
 
-void linearPrimes(int n) {
+void primes(int n) {
     std::memset(minPrimeFactor, 0, sizeof(minPrimeFactor));
     cnt = 0;
     for (int i = 2; i <= n; i++) {
