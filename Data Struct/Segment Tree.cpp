@@ -69,6 +69,7 @@ struct SegmentTree {
         int rNode = node[xNode].rNode;
         if (l <= node[lNode].r) Modify(l, r, lNode, xVal);
         if (r >= node[rNode].l) Modify(l, r, rNode, xVal);
+        PushUp(xNode);
         return;
     }
 
@@ -80,8 +81,8 @@ struct SegmentTree {
     //  [l, r] imcompletely contain xNode
         int lNode = node[xNode].lNode;
         int rNode = node[xNode].rNode;
-        if (node[xNode].tag) PushDown(xNode);
         int sum = 0;
+        if (node[xNode].tag) PushDown(xNode);
         if (l <= node[lNode].r) sum += Query(l, r, lNode);
         if (r >= node[rNode].l) sum += Query(l, r, rNode);
         return sum;
