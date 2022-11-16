@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <algorithm>
 
-namespcae Tree {
+namespace Tree {
     void DFS(int u, int from) {
         int maxPart = 0;
         for (int i = vertex[u].head; i; i = edge[i].next) {
