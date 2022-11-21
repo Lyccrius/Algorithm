@@ -49,52 +49,50 @@ namespace PDS {
 		else return Query(node[xNode].rNode, x);
 	}
 
-	int Find(int version, int x) {
-		int pos = Query(root[version], x);
+	int Find(int xNode, int x) {
+		int pos = Query(xNode, x);
 		if (node[pos].value == x) return pos;
-		return Find(version, node[pos].value);
+		return Find(xNode, node[pos].value);
 	}
 
-	int Modify(int xNode, int x, int value) {
-		int oNode = xNode;
+	void Modify(int &xNode, int x, int value) {
 		Clone(xNode);
 		if (node[xNode].l == node[xNode].r) {
 			node[xNode].value = value;
-			return xNode;
+			return;
 		}
 		int mid = (node[xNode].l + node[xNode].r) >> 1;
-		if (mid >= x) node[xNode].lNode = Modify(node[oNode].lNode, x, value);
-		else node[xNode].rNode = Modify(node[oNode].rNode, x, value);
-		return xNode;
+		if (mid >= x) Modify(node[xNode].lNode, x, value);
+		else Modify(node[xNode].rNode, x, value);
+		return;
 	}
 	
-	int Add(int xNode, int x) {
-		int oNode = xNode;
+	void Deepen(int &xNode, int x) {
 		Clone(xNode); 
 		if (node[xNode].l == node[xNode].r) {
 			node[xNode].depth++;
-			return xNode;
+			return;
 		}
 		int mid = (node[xNode].l + node[xNode].r) >> 1;
-		if (mid >= x) node[xNode].lNode = Add(node[oNode].lNode, x);
-		else node[xNode].rNode = Add(node[oNode].rNode, x);
-		return xNode;
+		if (mid >= x) Deepen(node[xNode].lNode, x);
+		else Deepen(node[xNode].rNode, x);
+		return;
 	}
 
-	void Union(int version, int x, int y) {
-		x = Find(version, x);
-		y = Find(version, y);
+	void Union(int &xNode, int x, int y) {
+		x = Find(xNode, x);
+		y = Find(xNode, y);
 		if (node[x].value != node[y].value) {
 			if (node[x].depth > node[y].depth) std::swap(x, y);
-			root[version] = Modify(root[version - 1], node[x].value, node[y].value);
-			if (node[x].depth == node[y].depth) root[version] = Add(root[version], node[y].value);
+			Modify(xNode, node[x].value, node[y].value);
+			if (node[x].depth == node[y].depth) Deepen(xNode, node[y].value);
 		}
 		return;
 	}
 
-	bool Check(int version, int x, int y) {
-		x = Find(version, x);
-		y = Find(version, y);
+	bool Check(int xNode, int x, int y) {
+		x = Find(xNode, x);
+		y = Find(xNode, y);
 		if (node[x].value == node[y].value) return true;
 		else return false;
 	}
@@ -112,7 +110,7 @@ int main() {
 			case 1: {
 				scanf("%d%d", &a, &b);
 				PDS::root[i] = PDS::root[i - 1];
-				PDS::Union(i, a, b);
+				PDS::Union(PDS::root[i], a, b);
 				break;
 			}
 			case 2: {
@@ -123,7 +121,7 @@ int main() {
 			case 3: {
 				scanf("%d%d", &a, &b);
 				PDS::root[i] = PDS::root[i - 1];
-				if (PDS::Check(i, a, b)) printf("1\n");
+				if (PDS::Check(PDS::root[i], a, b)) printf("1\n");
 				else printf("0\n");
 				break;
 			}
