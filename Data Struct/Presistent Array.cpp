@@ -6,7 +6,7 @@ int N, M;
 int a[maxn];
 int v, opt, loc, value;
 
-struct SegmentTree {
+struct PresistentArray {
 	struct Node {
 		int l;
 		int r;
@@ -60,25 +60,25 @@ struct SegmentTree {
 	}
 };
 
-SegmentTree segmentTree;
+PresistentArray PA;
 
 int main() {
 	scanf("%d%d", &N, &M);
 	for (int i = 1; i <= N; i++) scanf("%d", &a[i]);
-	segmentTree.Build(a, 1, N, segmentTree.root[0]);
+	PA.Build(a, 1, N, PA.root[0]);
 	for (int i = 1; i <= M; i++) {
 		scanf("%d%d", &v, &opt);
-		segmentTree.root[i] = segmentTree.root[v];
+		PA.root[i] = PA.root[v];
 		switch(opt) {
 			case 1: {
 				scanf("%d%d", &loc, &value);
 
-				segmentTree.Modify(segmentTree.root[i], loc, value);
+				PA.Modify(PA.root[i], loc, value);
 				break;
 			}
 			case 2: {
 				scanf("%d", &loc);
-				printf("%d\n", segmentTree.Query(segmentTree.root[i], loc));
+				printf("%d\n", PA.Query(PA.root[i], loc));
 				break;
 			}
 		}

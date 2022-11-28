@@ -7,7 +7,7 @@ const int maxN = 2e5 + 10;
 int n, m;
 int a[maxN];
 
-namespace PresidentTree {
+struct PersistentSegmentTree {
     struct Node {
         int l;
         int r;
@@ -55,7 +55,9 @@ namespace PresidentTree {
         if (dif >= k) return Query(node[xNode].lNode, node[yNode].lNode, k);
         else return Query(node[xNode].rNode, node[yNode].rNode, k - dif);
     }
-}
+};
+
+PersistentSegmentTree PST;
 
 int main() {
     scanf("%d%d", &n, &m);
@@ -66,15 +68,15 @@ int main() {
         minA = std::min(minA, a[i]);
         maxA = std::max(maxA, a[i]);
     }
-    PresidentTree::Build(PresidentTree::root[0], minA, maxA);
+    PST.Build(PST.root[0], minA, maxA);
     for (int i = 1; i <= n; i++) {
-        PresidentTree::root[i] = PresidentTree::root[i - 1];
-        PresidentTree::Modify(PresidentTree::root[i], a[i]);
+        PST.root[i] = PST.root[i - 1];
+        PST.Modify(PST.root[i], a[i]);
     }
     while (m--) {
         int l, r, k;
         scanf("%d%d%d", &l, &r, &k);
-        printf("%d\n", PresidentTree::Query(PresidentTree::root[l - 1], PresidentTree::root[r], k));
+        printf("%d\n", PST.Query(PST.root[l - 1], PST.root[r], k));
     }
     return 0;
 }

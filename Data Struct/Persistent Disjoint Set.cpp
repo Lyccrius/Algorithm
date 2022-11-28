@@ -6,7 +6,7 @@ const int maxM = 2e5 + 10;
 
 int n, m;
 
-namespace PDS {
+struct PersistentDisjointSet {
 	struct Node {
 		int l, r;
 		int lNode;
@@ -96,11 +96,13 @@ namespace PDS {
 		if (node[x].value == node[y].value) return true;
 		else return false;
 	}
-}
+};
+
+PersistentDisjointSet PDS;
 
 int main() {
 	scanf("%d%d", &n, &m);
-	PDS::Build(PDS::root[0], 1, n);
+	PDS.Build(PDS.root[0], 1, n);
 	for (int i = 1; i <= m; i++) {
 		int opt;
 		int a, b;
@@ -109,19 +111,19 @@ int main() {
 		switch(opt) {
 			case 1: {
 				scanf("%d%d", &a, &b);
-				PDS::root[i] = PDS::root[i - 1];
-				PDS::Union(PDS::root[i], a, b);
+				PDS.root[i] = PDS.root[i - 1];
+				PDS.Union(PDS.root[i], a, b);
 				break;
 			}
 			case 2: {
 				scanf("%d", &k);
-				PDS::root[i] = PDS::root[k];
+				PDS.root[i] = PDS.root[k];
 				break;
 			}
 			case 3: {
 				scanf("%d%d", &a, &b);
-				PDS::root[i] = PDS::root[i - 1];
-				if (PDS::Check(PDS::root[i], a, b)) printf("1\n");
+				PDS.root[i] = PDS.root[i - 1];
+				if (PDS.Check(PDS.root[i], a, b)) printf("1\n");
 				else printf("0\n");
 				break;
 			}

@@ -6,7 +6,7 @@ const int maxM = 5e5 + 10;
 int n, m;
 int a[maxN];
 
-struct TreeArray {
+struct BinaryIndexedTree {
 	struct Node {
 		int pre;
 		int value;
@@ -44,24 +44,24 @@ struct TreeArray {
 	}
 };
 
-TreeArray treeArray;
+BinaryIndexedTree BIT;
 
 int main() {
 	scanf("%d%d", &n, &m);
 	for (int i = 1; i <= n; i++) scanf("%d", &a[i]);
-	treeArray.Build(a, n);
+	BIT.Build(a, n);
 	for (int i = 1; i <= m; i++) {
 		int opt, x, y, k;
 		scanf("%d", &opt);
 		switch (opt) {
 			case 1: {
 				scanf("%d%d", &x, &k);
-				treeArray.Modify(x, k);
+				BIT.Modify(x, k);
 				break;
 			}
 			case 2: {
 				scanf("%d%d", &x, &y);
-				printf("%d\n", treeArray.Query(y) - treeArray.Query(x - 1));
+				printf("%d\n", BIT.Query(y) - BIT.Query(x - 1));
 				break;
 			}
 		}
