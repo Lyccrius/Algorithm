@@ -50,6 +50,6 @@ struct Graph {
             }
         }
 
-        return flag;
+        return relaxed;
     }
 };
